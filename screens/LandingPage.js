@@ -18,7 +18,7 @@ const LandingPage = ({ navigation }) => {
         Gérez toutes vos finances en un seul endroit, sûr et sécurisé en un rien de temps.
       </Text>
       <Image source={require('../assets/credit-card.png')} style={styles.cardImage} />
-      <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('OnboardingScreen')}>
+      <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('SignIn')}>
         <Text style={styles.buttonText}>Suivant</Text>
         <Ionicons name="arrow-forward" size={20} color="white" />
       </TouchableOpacity>
@@ -51,7 +51,7 @@ const styles = StyleSheet.create({
   topBarText: {
     fontSize: 20,
     fontWeight: 'bold',
-    color: 'white',
+    color: 'white', // Change this to any color you prefer
     marginLeft: 10,
   },
   title1: {
@@ -59,7 +59,7 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     color: 'black',
     textAlign: 'center',
-    marginTop: 50, 
+    marginTop: 50, // Adjust the margin top as needed
     marginBottom: 10,
   },
   title2: {
@@ -67,7 +67,7 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     color: '#FF0000',
     textAlign: 'center',
-    marginTop: 10, 
+    marginTop: 10, // Adjust the margin top as needed
     marginBottom: 30,
   },
   subtitle1: {
