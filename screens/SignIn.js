@@ -1,22 +1,40 @@
 import React, { useState } from 'react';
 import { View, Text, TextInput, TouchableOpacity, StyleSheet, Image } from 'react-native';
 
-const SignInScreen = ({ navigation }) => {
+const SignIn = ({ navigation }) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
   const [passwordsMatch, setPasswordsMatch] = useState(true);
+  const [emailValid, setEmailValid] = useState(true);
+  const [passwordValid, setPasswordValid] = useState(true);
+
+  const validateEmail = (email) => {
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return emailRegex.test(email);
+  };
 
   const handleSignIn = () => {
+    if (!validateEmail(email)) {
+      setEmailValid(false);
+      return;
+    }
+    if (password.length < 8) {
+      setPasswordValid(false);
+      return;
+    }
     if (password !== confirmPassword) {
       setPasswordsMatch(false);
       return;
     }
+
     // Logique pour la connexion de l'utilisateur
     console.log('Email:', email);
     console.log('Password:', password);
     console.log('Confirm Password:', confirmPassword);
-    // Redirection ou autre action après connexion
+    
+    // Redirection vers la page "PersonalScreen"
+    navigation.navigate('PersonalScreen');
   };
 
   return (
@@ -31,42 +49,40 @@ const SignInScreen = ({ navigation }) => {
       </View>
       <View style={styles.contentContainer}>
         <TextInput
-          style={styles.input}
+          style={[styles.input, !emailValid && styles.inputError]}
           placeholder="Email"
-          onChangeText={setEmail}
+          onChangeText={(text) => {
+            setEmail(text);
+            setEmailValid(true);
+          }}
           value={email}
           keyboardType="email-address"
           autoCapitalize="none"
         />
+        {!emailValid && <Text style={styles.errorMessage}>Email invalide</Text>}
         <TextInput
-          style={styles.input}
+          style={[styles.input, !passwordValid && styles.inputError]}
           placeholder="Mot De Passe"
-          onChangeText={setPassword}
+          onChangeText={(text) => {
+            setPassword(text);
+            setPasswordValid(true);
+          }}
           value={password}
           secureTextEntry
         />
-        <TextInput
-          style={[styles.input, !passwordsMatch && styles.inputError]}
-          placeholder="Confirmer Mot De Passe"
-          onChangeText={(text) => {
-            setConfirmPassword(text);
-            setPasswordsMatch(text === password);
-          }}
-          value={confirmPassword}
-          secureTextEntry
-        />
+        {!passwordValid && <Text style={styles.errorMessage}>Le mot de passe doit contenir au moins 8 caractères</Text>}
         {!passwordsMatch && <Text style={styles.errorMessage}>Mots de Passe Différents</Text>}
         <TouchableOpacity style={styles.button} onPress={handleSignIn}>
           <Text style={styles.buttonText}>Connexion</Text>
         </TouchableOpacity>
         <View style={styles.signUpContainer}>
           <Text style={styles.text}>Nouveau sur Casa De Papel ?</Text>
-          <TouchableOpacity onPress={() => navigation.navigate('SignUpScreen')}>
+          <TouchableOpacity onPress={() => navigation.navigate('SignUp')}>
             <Text style={[styles.text, styles.signUpText]}>Créer un compte</Text>
           </TouchableOpacity>
         </View>
         <View style={styles.signUpContainer}>
-          <TouchableOpacity onPress={() => navigation.navigate('ForgotPasswordScreen')}>
+          <TouchableOpacity onPress={() => navigation.navigate('ForgetPassword')}>
             <Text style={[styles.text, styles.signUpText]}>Mot de Passe oublié ?</Text>
           </TouchableOpacity>
         </View>
@@ -99,12 +115,12 @@ const styles = StyleSheet.create({
   topBarText: {
     fontSize: 20,
     fontWeight: 'bold',
-    color: 'white', // Change this to any color you prefer
+    color: 'white', 
     marginLeft: 10,
   },
   headerContainer: {
     alignItems: 'center',
-    marginTop: 150, // Espace ajouté pour descendre les phrases
+    marginTop: 150, 
   },
   title: {
     fontSize: 24,
@@ -114,14 +130,14 @@ const styles = StyleSheet.create({
   subtitle: {
     fontSize: 18,
     color: 'black',
-    marginTop: 10, // Espace ajouté pour descendre le sous-titre
+    marginTop: 10,
     marginBottom: 20,
   },
   contentContainer: {
     flex: 1,
     justifyContent: 'center',
     paddingHorizontal: 20,
-    marginTop: -150, // Ajustement de la position de la boîte de sign in
+    marginTop: -240, 
   },
   input: {
     height: 50,
@@ -129,7 +145,7 @@ const styles = StyleSheet.create({
     borderColor: 'gray',
     borderWidth: 1,
     borderRadius: 5,
-    marginBottom: 20, // Espace ajouté entre les champs de saisie
+    marginBottom: 20,
     paddingHorizontal: 10,
     color: 'black',
   },
@@ -147,6 +163,7 @@ const styles = StyleSheet.create({
   buttonText: {
     color: 'white',
     fontSize: 18,
+    fontWeight: 'bold',
   },
   signUpContainer: {
     flexDirection: 'row',
@@ -167,4 +184,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default SignInScreen;
+export default SignIn;

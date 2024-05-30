@@ -1,51 +1,91 @@
 import React, { useState } from 'react';
-import { View, Text, TextInput, TouchableOpacity, StyleSheet } from 'react-native';
+import { View, Text, TextInput, TouchableOpacity, StyleSheet, Image } from 'react-native';
 
 const SignUp = ({ navigation }) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
+  const [passwordsMatch, setPasswordsMatch] = useState(true);
+  const [emailValid, setEmailValid] = useState(true);
+  const [passwordValid, setPasswordValid] = useState(true);
+
+  const validateEmail = (email) => {
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return emailRegex.test(email);
+  };
 
   const handleSignUp = () => {
-    // Logique pour l'inscription de l'utilisateur
+    if (!validateEmail(email)) {
+      setEmailValid(false);
+      return;
+    }
+    if (password.length < 8) {
+      setPasswordValid(false);
+      return;
+    }
+    if (password !== confirmPassword) {
+      setPasswordsMatch(false);
+      return;
+    }
+
+    // Logique pour la connexion de l'utilisateur
     console.log('Email:', email);
     console.log('Password:', password);
     console.log('Confirm Password:', confirmPassword);
-    // Redirection vers l'écran de connexion après l'inscription réussie
-    navigation.navigate('SignInScreen');
+    
+    // Redirection vers la page "PersonalScreen"
+    navigation.navigate('PersonalScreen');
   };
 
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Sign Up</Text>
-      <TextInput
-        style={styles.input}
-        placeholder="Email"
-        onChangeText={setEmail}
-        value={email}
-        keyboardType="email-address"
-        autoCapitalize="none"
-      />
-      <TextInput
-        style={styles.input}
-        placeholder="Password"
-        onChangeText={setPassword}
-        value={password}
-        secureTextEntry
-      />
-      <TextInput
-        style={styles.input}
-        placeholder="Confirm Password"
-        onChangeText={setConfirmPassword}
-        value={confirmPassword}
-        secureTextEntry
-      />
-      <TouchableOpacity style={styles.button} onPress={handleSignUp}>
-        <Text style={styles.buttonText}>Sign Up</Text>
-      </TouchableOpacity>
-      <TouchableOpacity onPress={() => navigation.navigate('SignInScreen')}>
-        <Text style={styles.link}>Already have an account? Sign In</Text>
-      </TouchableOpacity>
+      <View style={styles.topBar}>
+        <Image source={require('../assets/logo.png')} style={styles.logo} />
+        <Text style={styles.topBarText}>Casa De Papel</Text>
+      </View>
+      <View style={styles.headerContainer}>
+        <Text style={styles.title}>Bienvenue dans la Famille !</Text>
+        <Text style={styles.subtitle}>Inscrivez-vous.</Text>
+      </View>
+      <View style={styles.contentContainer}>
+        <TextInput
+          style={[styles.input, !emailValid && styles.inputError]}
+          placeholder="Email"
+          onChangeText={(text) => {
+            setEmail(text);
+            setEmailValid(true);
+          }}
+          value={email}
+          keyboardType="email-address"
+          autoCapitalize="none"
+        />
+        {!emailValid && <Text style={styles.errorMessage}>Email invalide</Text>}
+        <TextInput
+          style={[styles.input, !passwordValid && styles.inputError]}
+          placeholder="Mot De Passe"
+          onChangeText={(text) => {
+            setPassword(text);
+            setPasswordValid(true);
+          }}
+          value={password}
+          secureTextEntry
+        />
+        {!passwordValid && <Text style={styles.errorMessage}>Le mot de passe doit contenir au moins 8 caractères</Text>}
+        <TextInput
+          style={[styles.input, !passwordsMatch && styles.inputError]}
+          placeholder="Confirmer Mot De Passe"
+          onChangeText={(text) => {
+            setConfirmPassword(text);
+            setPasswordsMatch(text === password);
+          }}
+          value={confirmPassword}
+          secureTextEntry
+        />
+        {!passwordsMatch && <Text style={styles.errorMessage}>Mots de Passe Différents</Text>}
+        <TouchableOpacity style={styles.button} onPress={(handleSignUp) => navigation.navigate('EmailValidation')}>
+          <Text style={styles.buttonText}>Suivant</Text>
+        </TouchableOpacity>
+      </View>
     </View>
   );
 };
@@ -53,16 +93,50 @@ const SignUp = ({ navigation }) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
     backgroundColor: 'white',
+  },
+  topBar: {
+    position: 'absolute',
+    top: 0,
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'flex-start',
     paddingHorizontal: 20,
+    paddingVertical: 5,
+    backgroundColor: 'black', 
+    width: '100%',
+  },
+  logo: {
+    width: 50,
+    height: 50,
+    resizeMode: 'contain',
+  },
+  topBarText: {
+    fontSize: 20,
+    fontWeight: 'bold',
+    color: 'white', 
+    marginLeft: 10,
+  },
+  headerContainer: {
+    alignItems: 'center',
+    marginTop: 150, 
   },
   title: {
     fontSize: 24,
     fontWeight: 'bold',
-    marginBottom: 20,
     color: 'black',
+  },
+  subtitle: {
+    fontSize: 18,
+    color: 'black',
+    marginTop: 10,
+    marginBottom: 20,
+  },
+  contentContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    paddingHorizontal: 20,
+    marginTop: -260, 
   },
   input: {
     height: 50,
@@ -70,11 +144,15 @@ const styles = StyleSheet.create({
     borderColor: 'gray',
     borderWidth: 1,
     borderRadius: 5,
-    marginBottom: 10,
+    marginBottom: 20,
     paddingHorizontal: 10,
+    color: 'black',
+  },
+  inputError: {
+    borderColor: 'red',
   },
   button: {
-    backgroundColor: '#007BFF',
+    backgroundColor: 'red',
     width: '100%',
     alignItems: 'center',
     paddingVertical: 15,
@@ -84,10 +162,19 @@ const styles = StyleSheet.create({
   buttonText: {
     color: 'white',
     fontSize: 18,
+    fontWeight: 'bold',
+  },  
+  text: {
+    fontSize: 16,
+    color: 'black',
   },
-  link: {
-    marginTop: 20,
-    color: '#007BFF',
+  signUpText: {
+    marginLeft: 5,
+    color: 'red',
+  },
+  errorMessage: {
+    color: 'black',
+    marginBottom: 10,
   },
 });
 

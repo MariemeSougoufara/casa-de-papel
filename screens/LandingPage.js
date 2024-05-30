@@ -51,7 +51,7 @@ const styles = StyleSheet.create({
   topBarText: {
     fontSize: 20,
     fontWeight: 'bold',
-    color: 'white', // Change this to any color you prefer
+    color: 'white', 
     marginLeft: 10,
   },
   title1: {
@@ -59,7 +59,7 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     color: 'black',
     textAlign: 'center',
-    marginTop: 50, // Adjust the margin top as needed
+    marginTop: 50, 
     marginBottom: 10,
   },
   title2: {
@@ -67,7 +67,7 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     color: '#FF0000',
     textAlign: 'center',
-    marginTop: 10, // Adjust the margin top as needed
+    marginTop: 10, 
     marginBottom: 30,
   },
   subtitle1: {
@@ -106,6 +106,7 @@ const styles = StyleSheet.create({
     color: 'white',
     fontSize: 16,
     marginRight: 10,
+    fontWeight: 'bold'
   },
 });
 
