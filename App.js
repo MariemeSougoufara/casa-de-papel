@@ -3,7 +3,7 @@ import { StyleSheet, Text, View } from 'react-native';
 import {NavigationContainer} from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import LandingPage from './screens/LandingPage';
-import OnboardingScreen from './screens/OnboardingScreen';
+import SignIn from './screens/SignIn';
 
 const Stack =  createNativeStackNavigator();
 export default function App() {
@@ -15,8 +15,8 @@ export default function App() {
         component={LandingPage}
       />
      <Stack.Screen
-        name="OnboardingScreen"
-        component={OnboardingScreen}
+        name="SignIn"
+        component={SignIn}
       />
       </Stack.Navigator>
     </NavigationContainer>

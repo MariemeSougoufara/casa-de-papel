@@ -114,6 +114,7 @@ const styles = StyleSheet.create({
   subtitle: {
     fontSize: 18,
     color: 'black',
+    marginTop: 10, // Espace ajouté pour descendre le sous-titre
     marginBottom: 20,
   },
   contentContainer: {
