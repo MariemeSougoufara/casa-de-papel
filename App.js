@@ -7,6 +7,7 @@ import SignIn from './screens/SignIn';
 import SignUp from './screens/SignUp';
 import EmailValidation from './screens/EmailValidation';
 import ForgetPassword from './screens/ForgetPassword';
+import PersonalInfo from './screens/PersonalInfo';
 
 const Stack =  createNativeStackNavigator();
 export default function App() {
@@ -32,6 +33,10 @@ export default function App() {
      <Stack.Screen
         name="EmailValidation"
         component={EmailValidation}
+      /> 
+      <Stack.Screen
+        name="PersonalScreen"
+        component={PersonalInfo}
       /> 
       </Stack.Navigator>
     </NavigationContainer>
