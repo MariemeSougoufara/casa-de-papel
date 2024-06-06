@@ -14,12 +14,17 @@ const SignUp = ({ navigation }) => {
     return emailRegex.test(email);
   };
 
+  const validatePassword = (password) => {
+    const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
+    return passwordRegex.test(password);
+  };
+
   const handleSignUp = () => {
     if (!validateEmail(email)) {
       setEmailValid(false);
       return;
     }
-    if (password.length < 8) {
+    if (!validatePassword(password)) {
       setPasswordValid(false);
       return;
     }
@@ -28,13 +33,8 @@ const SignUp = ({ navigation }) => {
       return;
     }
 
-    // Logique pour la connexion de l'utilisateur
-    console.log('Email:', email);
-    console.log('Password:', password);
-    console.log('Confirm Password:', confirmPassword);
-    
-    // Redirection vers la page "PersonalScreen"
-    navigation.navigate('PersonalScreen');
+    // Redirection vers la page "EmailValidation"
+    navigation.navigate('EmailValidation');
   };
 
   return (
@@ -44,8 +44,11 @@ const SignUp = ({ navigation }) => {
         <Text style={styles.topBarText}>Casa De Papel</Text>
       </View>
       <View style={styles.headerContainer}>
+      <Image source={require('../assets/happyFamily.png')} style={styles.happyFamily} />
+      <View>
         <Text style={styles.title}>Bienvenue dans la Famille !</Text>
         <Text style={styles.subtitle}>Inscrivez-vous.</Text>
+        </View>
       </View>
       <View style={styles.contentContainer}>
         <TextInput
@@ -70,21 +73,22 @@ const SignUp = ({ navigation }) => {
           value={password}
           secureTextEntry
         />
-        {!passwordValid && <Text style={styles.errorMessage}>Le mot de passe doit contenir au moins 8 caractères</Text>}
+        {!passwordValid && <Text style={styles.errorMessage}>Le mot de passe doit contenir au moins 8 caractères dont une lettre majuscule, une lettre minuscule, un chiffre et un caractère spécial. </Text>}
         <TextInput
           style={[styles.input, !passwordsMatch && styles.inputError]}
           placeholder="Confirmer Mot De Passe"
           onChangeText={(text) => {
             setConfirmPassword(text);
-            setPasswordsMatch(text === password);
+            setPasswordsMatch(true);
           }}
           value={confirmPassword}
           secureTextEntry
         />
         {!passwordsMatch && <Text style={styles.errorMessage}>Mots de Passe Différents</Text>}
-        <TouchableOpacity style={styles.button} onPress={(handleSignUp) => navigation.navigate('EmailValidation')}>
+        <TouchableOpacity style={styles.button} onPress={handleSignUp}>
           <Text style={styles.buttonText}>Suivant</Text>
         </TouchableOpacity>
+
       </View>
     </View>
   );
@@ -118,8 +122,16 @@ const styles = StyleSheet.create({
     marginLeft: 10,
   },
   headerContainer: {
+    flexDirection: 'row',
     alignItems: 'center',
+  justifyContent: 'center',
     marginTop: 150, 
+  },
+  happyFamily: {
+    width: 50,
+    height: 50,
+    marginRight: 20,
+    marginTop: -10,
   },
   title: {
     fontSize: 24,
@@ -136,7 +148,7 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     paddingHorizontal: 20,
-    marginTop: -260, 
+    marginTop: -200, 
   },
   input: {
     height: 50,

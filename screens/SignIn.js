@@ -4,8 +4,6 @@ import { View, Text, TextInput, TouchableOpacity, StyleSheet, Image } from 'reac
 const SignIn = ({ navigation }) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [confirmPassword, setConfirmPassword] = useState('');
-  const [passwordsMatch, setPasswordsMatch] = useState(true);
   const [emailValid, setEmailValid] = useState(true);
   const [passwordValid, setPasswordValid] = useState(true);
 
@@ -19,22 +17,9 @@ const SignIn = ({ navigation }) => {
       setEmailValid(false);
       return;
     }
-    if (password.length < 8) {
-      setPasswordValid(false);
-      return;
-    }
-    if (password !== confirmPassword) {
-      setPasswordsMatch(false);
-      return;
-    }
 
-    // Logique pour la connexion de l'utilisateur
-    console.log('Email:', email);
-    console.log('Password:', password);
-    console.log('Confirm Password:', confirmPassword);
-    
-    // Redirection vers la page "PersonalScreen"
-    navigation.navigate('PersonalScreen');
+    // Redirection vers la page "HomeScreen"
+    navigation.navigate('HomeScreen');
   };
 
   return (
@@ -44,8 +29,11 @@ const SignIn = ({ navigation }) => {
         <Text style={styles.topBarText}>Casa De Papel</Text>
       </View>
       <View style={styles.headerContainer}>
+      <Image source={require('../assets/happyImage.png')} style={styles.happyImage} />
+      <View>
         <Text style={styles.title}>Content de vous revoir !</Text>
         <Text style={styles.subtitle}>Connectez-vous.</Text>
+        </View>
       </View>
       <View style={styles.contentContainer}>
         <TextInput
@@ -68,10 +56,9 @@ const SignIn = ({ navigation }) => {
             setPasswordValid(true);
           }}
           value={password}
-          secureTextEntry
+          secureTextEntry={true}
         />
-        {!passwordValid && <Text style={styles.errorMessage}>Le mot de passe doit contenir au moins 8 caractères</Text>}
-        {!passwordsMatch && <Text style={styles.errorMessage}>Mots de Passe Différents</Text>}
+        {!passwordValid && <Text style={styles.errorMessage}>Mot de passe invalide</Text>}
         <TouchableOpacity style={styles.button} onPress={handleSignIn}>
           <Text style={styles.buttonText}>Connexion</Text>
         </TouchableOpacity>
@@ -119,8 +106,15 @@ const styles = StyleSheet.create({
     marginLeft: 10,
   },
   headerContainer: {
+    flexDirection: 'row',
     alignItems: 'center',
+    justifyContent: 'center',
     marginTop: 150, 
+  },
+  happyImage: {
+    width: 50,
+    height: 50,
+    marginRight: 40,
   },
   title: {
     fontSize: 24,

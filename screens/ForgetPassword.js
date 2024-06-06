@@ -4,14 +4,20 @@ import { View, Text, TextInput, TouchableOpacity, StyleSheet, Image } from 'reac
 const ForgetPassword = ({ navigation }) => {
   const [email, setEmail] = useState('');
   const [code, setCode] = useState('');
+  const [emailValid, setEmailValid] = useState(true);
+
+  const validateEmail = (email) => {
+    const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+    return emailRegex.test(email);
+  };
 
   const handleEmailValidation = () => {
-    // Logique pour la validation de l'email et du code
-    console.log('Email:', email);
-    console.log('Code:', code);
+    if (!validateEmail(email)) {
+      setEmailValid(false);
+      return;
+    }
 
-    // Redirection vers la page "PersonalScreen"
-    navigation.navigate('PersonalScreen');
+    navigation.navigate('SignIn');
   };
 
   return (
@@ -29,13 +35,17 @@ const ForgetPassword = ({ navigation }) => {
       </View>
       <View style={styles.contentContainer}>
         <TextInput
-          style={styles.input}
+          style={[styles.input, !emailValid && styles.inputError]}
           placeholder="Email"
-          onChangeText={(text) => setEmail(text)}
+          onChangeText={(text) => {
+            setEmail(text);
+            setEmailValid(text); 
+          }}
           value={email}
           keyboardType="email-address"
           autoCapitalize="none"
         />
+        {!emailValid && <Text style={styles.errorText}>Email invalide</Text>}
         <TextInput
           style={styles.input}
           placeholder="Code de validation"
@@ -127,6 +137,9 @@ const styles = StyleSheet.create({
     paddingHorizontal: 10,
     color: 'black',
   },
+  inputError: {
+    borderColor: 'red',
+  },
   button: {
     backgroundColor: 'red',
     width: '100%',
@@ -140,13 +153,13 @@ const styles = StyleSheet.create({
     fontSize: 18,
     fontWeight: 'bold',
   },  
-  text: {
-    fontSize: 16,
-    color: 'black',
-  },
-  errorMessage: {
+  errorText: {
     color: 'black',
     marginBottom: 10,
+  },
+  successText: {
+    color: 'green',
+    marginTop: 5,
   },
 });
 

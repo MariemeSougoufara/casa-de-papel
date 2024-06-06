@@ -5,8 +5,6 @@ const EmailValidation = ({ navigation }) => {
   const [code, setCode] = useState('');
 
   const handleEmailValidation = () => {
-    // Logique pour la validation du code
-    console.log('Code:', code);
 
     // Redirection vers la page "PersonalScreen"
     navigation.navigate('PersonalScreen');
