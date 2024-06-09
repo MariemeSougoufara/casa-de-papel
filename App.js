@@ -8,36 +8,51 @@ import SignUp from './screens/SignUp';
 import EmailValidation from './screens/EmailValidation';
 import ForgetPassword from './screens/ForgetPassword';
 import PersonalInfo from './screens/PersonalInfo';
+import HomePage from './screens/HomePage';
+import DetailTransaction from './screens/detailTransaction';
+import ScreenBottomNavHandler from './screens/ScreenBottomNavHandler';
 
 const Stack =  createNativeStackNavigator();
 export default function App() {
   return (
     <NavigationContainer>
-      <Stack.Navigator>
-      <Stack.Screen
-        name="LandingPage"
-        component={LandingPage}
-      />
-     <Stack.Screen
-        name="SignIn"
-        component={SignIn}
-      />
-      <Stack.Screen
-        name="SignUp"
-        component={SignUp}
-      />
-      <Stack.Screen
-        name="ForgetPassword"
-        component={ForgetPassword}
+    <Stack.Navigator>
+    <Stack.Screen
+          name="PersonalScreen"
+          component={PersonalInfo}
+        />
+    <Stack.Screen
+        name="HomePage"
+        component={ScreenBottomNavHandler}
+        options={{ headerShown: false }}
       /> 
-     <Stack.Screen
-        name="EmailValidation"
-        component={EmailValidation}
-      /> 
+    
+      
       <Stack.Screen
-        name="PersonalScreen"
-        component={PersonalInfo}
-      /> 
+          name="LandingPage"
+          component={LandingPage}
+        />
+      <Stack.Screen
+          name="SignIn"
+          component={SignIn}
+        />
+        <Stack.Screen
+          name="SignUp"
+          component={SignUp}
+        />
+        <Stack.Screen
+          name="ForgetPassword"
+          component={ForgetPassword}
+        /> 
+      <Stack.Screen
+          name="EmailValidation"
+          component={EmailValidation}
+        /> 
+        
+        <Stack.Screen
+          name='DetailTransaction'
+          component={DetailTransaction}
+        />
       </Stack.Navigator>
     </NavigationContainer>
   );
