@@ -3,6 +3,11 @@ import { StyleSheet, Text, View } from 'react-native';
 import {NavigationContainer} from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import LandingPage from './screens/LandingPage';
+import SignIn from './screens/SignIn';
+import SignUp from './screens/SignUp';
+import EmailValidation from './screens/EmailValidation';
+import ForgetPassword from './screens/ForgetPassword';
+import PersonalInfo from './screens/PersonalInfo';
 
 const Stack =  createNativeStackNavigator();
 export default function App() {
@@ -10,9 +15,29 @@ export default function App() {
     <NavigationContainer>
       <Stack.Navigator>
       <Stack.Screen
-        name="Landing Page"
+        name="LandingPage"
         component={LandingPage}
       />
+     <Stack.Screen
+        name="SignIn"
+        component={SignIn}
+      />
+      <Stack.Screen
+        name="SignUp"
+        component={SignUp}
+      />
+      <Stack.Screen
+        name="ForgetPassword"
+        component={ForgetPassword}
+      /> 
+     <Stack.Screen
+        name="EmailValidation"
+        component={EmailValidation}
+      /> 
+      <Stack.Screen
+        name="PersonalScreen"
+        component={PersonalInfo}
+      /> 
       </Stack.Navigator>
     </NavigationContainer>
   );
