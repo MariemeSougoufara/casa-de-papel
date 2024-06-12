@@ -17,9 +17,14 @@ const SignIn = ({ navigation }) => {
       setEmailValid(false);
       return;
     }
+<<<<<<< HEAD
 
     // Redirection vers la page "HomeScreen"
     navigation.navigate('HomeScreen');
+=======
+    // Redirection vers la page "HomeScreen"
+    navigation.navigate('HomePage');
+>>>>>>> ddba7b7 (envoie de mail, integration de l'api)
   };
 
   return (

@@ -33,8 +33,8 @@ const styles = StyleSheet.create({
     paddingTop: 90, 
   },
   topBar: {
-    position: 'absolute',
-    top: 0,
+    // position: 'absolute',
+    // top: 0,
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'flex-start',

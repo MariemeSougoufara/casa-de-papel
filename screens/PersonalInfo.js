@@ -10,6 +10,7 @@ import { Button } from 'react-native-elements';
 
 const PersonalInfo = ({ navigation }) => {
     useEffect(() => {
+<<<<<<< HEAD
         const user = {
             nom: "Doe",
             prenom: "Diouf",
@@ -24,6 +25,9 @@ const PersonalInfo = ({ navigation }) => {
         // createNewUser(user);
         userService.getUser();
         // userService.getUser();
+=======
+        
+>>>>>>> ddba7b7 (envoie de mail, integration de l'api)
     }, []);
 
     const [focusedInput, setFocusedInput] = useState(null);

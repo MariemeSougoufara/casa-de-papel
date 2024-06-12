@@ -18,6 +18,19 @@ export default function App() {
     <NavigationContainer>
     <Stack.Navigator>
     <Stack.Screen
+    name="SignUp"
+    component={SignUp}
+  />
+    <Stack.Screen
+          name="LandingPage"
+          component={LandingPage}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+      name="EmailValidation"
+      component={EmailValidation}  
+      /> 
+    <Stack.Screen
           name="PersonalScreen"
           component={PersonalInfo}
         />
@@ -26,28 +39,18 @@ export default function App() {
         component={ScreenBottomNavHandler}
         options={{ headerShown: false }}
       /> 
-    
       
-      <Stack.Screen
-          name="LandingPage"
-          component={LandingPage}
-        />
       <Stack.Screen
           name="SignIn"
           component={SignIn}
+          options={{ headerShown: true}}
         />
-        <Stack.Screen
-          name="SignUp"
-          component={SignUp}
-        />
+       
         <Stack.Screen
           name="ForgetPassword"
           component={ForgetPassword}
         /> 
-      <Stack.Screen
-          name="EmailValidation"
-          component={EmailValidation}
-        /> 
+    
         
         <Stack.Screen
           name='DetailTransaction'
