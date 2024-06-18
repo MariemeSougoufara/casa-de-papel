@@ -11,12 +11,19 @@ import PersonalInfo from './screens/PersonalInfo';
 import HomePage from './screens/HomePage';
 import DetailTransaction from './screens/detailTransaction';
 import ScreenBottomNavHandler from './screens/ScreenBottomNavHandler';
+import AccountScreen from './screens/AccountScreen';
 
 const Stack =  createNativeStackNavigator();
 export default function App() {
   return (
     <NavigationContainer>
     <Stack.Navigator>
+    <Stack.Screen
+          name="AccountScreen"
+          component={AccountScreen}
+          options={{ headerShown: false }}
+        />
+
     <Stack.Screen
     name="SignUp"
     component={SignUp}
