@@ -1,46 +1,99 @@
 import {API_URL} from '@env';
 
-const getUser = async () =>{
-    try {
-        const response = await fetch(`${API_URL}/utilisateur/`);
-        const json = await response.json();
-        return json.items;
-    } catch (error) {
-        console.error(error);
-    }
-}
+// Adjust the base URL as needed
 
-const createNewUser = async (user) => {
+// Function to register a new user
+async function registerUser(user) {
     try {
-        const requestOptions = {
+        const response = await fetch(`${API_URL}/auth/register`, {
             method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
+            headers: {
+                'Content-Type': 'application/json'
+            },
             body: JSON.stringify(user)
-        };
+        });
 
-        const response = await fetch('${API_URL}/utilisateur/', requestOptions);
-
-        // Vérifier le code d'état de la réponse
         if (!response.ok) {
-            const statusCode = response.status; // Récupérer le code d'état
-            const errorMessage = 'Erreur lors de la requête : ' + statusCode;
-            console.log(error)
-            throw new Error(errorMessage); // Propager l'erreur
+            throw new Error(`Error: ${response.status}`);
         }
 
         const data = await response.json();
-        return data; // Optionnel : retourner les données si nécessaire
+        return data;
     } catch (error) {
-        console.error('Erreur lors de la requête :', error.message);
-        // Gérer l'erreur ou la rejeter pour la traiter à l'extérieur de la fonction
+        console.error("Failed to register user:", error);
         throw error;
     }
 }
 
+// Function to log in a user
+async function loginUser(loginRequest) {
+    try {
+        const response = await fetch(`${API_URL}/auth/login`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(loginRequest)
+        });
 
+        if (!response.ok) {
+            throw new Error(`Login error: ${response.status}`);
+        }
 
-const modifyUser = async () => {
-
+        const data = await response.json();
+        return data;
+    } catch (error) {
+        console.error("Failed to log in user:", error);
+        throw error;
+    }
 }
 
-export default {createNewUser, modifyUser, getUser}
+// services/userService.js
+
+const findUserByEmail = async (email, token) => {
+    try {
+      const response = await fetch(`${API_URL}/users/email/${email}`, {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`,
+        },
+      });
+  
+      const userData = await response.json();
+      return userData;
+    } catch (error) {
+      console.error('Error finding user by email:', error);
+      throw error;
+    }
+  };
+  
+// Example usage:
+// const newUser = {
+//     nom: "Doe",
+//     prenom: "John",
+//     dateNaissance: "1990-01-01",
+//     adresse: "123 Street, City",
+//     email: "user@example.com",
+//     motDePasse: "password",
+//     telephone: "123-456-7890"
+// };
+
+// registerUser(newUser).then(response => {
+//     console.log("User registered successfully:", response);
+// }).catch(error => {
+//     console.error("Error registering user:", error);
+// });
+
+ const loginRequest = {
+     email: "user@example.com",
+     password: "password"
+ };
+
+// loginUser(loginRequest).then(response => {
+//     console.log("User logged in successfully:", response);
+// }).catch(error => {
+//     console.error("Error logging in user:", error);
+// });
+
+export { registerUser, loginUser, findUserByEmail};

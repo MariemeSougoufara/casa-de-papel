@@ -11,34 +11,52 @@ import PersonalInfo from './screens/PersonalInfo';
 import HomePage from './screens/HomePage';
 import DetailTransaction from './screens/detailTransaction';
 import ScreenBottomNavHandler from './screens/ScreenBottomNavHandler';
+import IdentityVerificationSuccessPage from './screens/IdentityVerificationSucessPage';
+import VerificationPage from './screens/VerificationPage';
+import AllOperationPage from './screens/AllOperationsPage';
+import Plafond from './screens/Plafond';
 
 const Stack =  createNativeStackNavigator();
 export default function App() {
   return (
     <NavigationContainer>
     <Stack.Navigator>
-    <Stack.Screen
-    name="SignUp"
-    component={SignUp}
-  />
+   
     <Stack.Screen
           name="LandingPage"
           component={LandingPage}
           options={{ headerShown: false }}
         />
-        <Stack.Screen
-      name="EmailValidation"
-      component={EmailValidation}  
-      /> 
-    <Stack.Screen
+         <Stack.Screen
           name="PersonalScreen"
           component={PersonalInfo}
         />
-    <Stack.Screen
+        <Stack.Screen
         name="HomePage"
         component={ScreenBottomNavHandler}
         options={{ headerShown: false }}
       /> 
+    <Stack.Screen
+    name="SignUp"
+    component={SignUp}
+    
+  />
+    
+        <Stack.Screen
+      name="EmailValidation"
+      component={EmailValidation}  
+      /> 
+      <Stack.Screen  
+        name="IdentityVerificationSuccess"
+        component={IdentityVerificationSuccessPage}
+      />
+
+      <Stack.Screen 
+        name="VerificationPage"
+        component={VerificationPage}
+      />
+    
+    
       
       <Stack.Screen
           name="SignIn"
@@ -55,6 +73,15 @@ export default function App() {
         <Stack.Screen
           name='DetailTransaction'
           component={DetailTransaction}
+        />
+        <Stack.Screen
+          name='allOperations'
+          title="Operations"
+          component={AllOperationPage}
+        />
+        <Stack.Screen 
+          name="Plafond"
+          component={Plafond}
         />
       </Stack.Navigator>
     </NavigationContainer>

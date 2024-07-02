@@ -1,22 +1,70 @@
 // HomePage.js
 
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import tw from 'twrnc';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+import { jwtDecode } from 'jwt-decode';
 
-import { View, Text, StyleSheet, Image, TouchableOpacity, ScrollView } from 'react-native';
+import { View, Text, StyleSheet, Image, TouchableOpacity, ScrollView, ActivityIndicator } from 'react-native';
 import logo from '../assets/logo.png'
-const HomePage = ({navigation}) => {
+import { listOfOperations } from '../utils/utils';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { findUserByEmail } from '../services/userService';
+import ErrorScreen from './ErrorScreen';
+import Loading from './Loading';
 
+
+const HomePage = ({navigation}) => {
+  const userDetails = {
+    adresse: null,
+    dateInscription: null,
+    dateNaissance: "",
+    dernierAcces: null,
+    email: "",
+    idUtilisateur: "",
+    motDePasse: "",
+    nom: "",
+    prenom: "",
+    telephone: ""
+  };
+  const handleRetry = () =>{
+    return ;
+  }
+  
     const [solde, setSolde] = useState(0);
-    const options = [
-        { key: '1', title: 'Activer Carte' , iconName:"credit-card-edit"},
-    { key: '2', title: 'Plafond' , iconName:"bank-minus"},
-    { key: '3', title: ' Retrait d\'argent' , iconName:"cash"},
-    { key: '4', title: 'Virement' , iconName:"cash-refund"},
-    { key: '5', title: 'Gestion Prelevement' , iconName:"credit-card-edit"},
-    ]
+    const options = listOfOperations.slice(0,6);
+    const [token, setToken] = useState("");
+    const [email, setEmail] = useState("");
+    const [user, setUser] = useState(userDetails);
+    const [loading, setLoading] = useState(false);
+    const [error,  setError] = useState(null);
+
+   const setTokenAndEmail  = async () => {
+      setToken(await AsyncStorage.getItem("token"));
+      setEmail(await AsyncStorage.getItem("email"));
+   }
+    useEffect(() =>{
+      setTokenAndEmail();
+      
+    },[])
+
+    useEffect(() =>{
+      const fetchUser = async () => {
+        try {
+          const userData = await findUserByEmail(email, token);
+          setUser(userData);
+        } catch (error) {
+          setError(error.message);
+        } finally {
+          setLoading(false);
+        }
+      };
+  
+      if (email && token) {
+        fetchUser();
+      }
+    },[email, token])
 
     const historiqueTransaction = [
       {
@@ -56,15 +104,18 @@ const HomePage = ({navigation}) => {
       }
   ];
   
-  console.log(historiqueTransaction);
+
   
   return (
-    <ScrollView>
+    <ScrollView style={tw`h-full`}>
+      {loading ?
+      <Loading />
+       :  
     <View style={tw`w-full h-full bg-white p-5 `}>
     <View style={tw`bg-black height flex-row justify-between h-45 rounded`}>
         <View style={tw`p-4 justify-between`}>
             <View>
-              <Text style={tw`text-white font-bold text-lg`}>Bonjour, John</Text>
+              <Text style={tw`text-white font-bold text-lg`}>{user.nom}{ user.prenom}</Text>
             </View>
             <Text style={tw`text-white font-bold text-lg`}>
                 SOLDE
@@ -77,25 +128,20 @@ const HomePage = ({navigation}) => {
             <Image source={logo} style={styles.logo}/>
         </View>
     </View>
+    
     <View>
       <View style={tw`flex-row justify-between mt-3 items-center`}>
         <Text style={tw`text-md font-bold text-gray-600 mt-5`}>
         Operations
         </Text>
-        <TouchableOpacity style={tw`bg-gray-200 px-4 py-2 rounded-lg mt-2`} onPress={() => navigation.navigate('Operations')}>
+        <TouchableOpacity style={tw`bg-gray-200 px-4 py-2 rounded-lg mt-2`} onPress={() => navigation.navigate('allOperations')}>
             <Text style={tw`text-gray-700 font-bold`}>All</Text>
         </TouchableOpacity>
       </View>
-       {/** <ScrollView horizontal={true} style={tw`flex p-2 mt-5`}>
-            {options.map((item) => {
-                return <View key = {item.key} style={tw`p-3 bg-yellow-200 mr-2 h-30 w-40 rounded-xl`}>
-                <Text>{item.title}</Text>
-                </View>
-            })}
-        </ScrollView>  */}
+      
         <View style={tw`flex p-2 mt-5 flex-row flex-wrap gap-2 `}>
         {options.map((item) => {
-          return <TouchableOpacity activeOpacity={0.1} key = {item.key} >
+          return <TouchableOpacity activeOpacity={0.1} key = {item.key} onPress={() => navigation.navigate(item.path)}>
           <View style={tw`p-3  mr-2 h-12 w-40  shadow-xl flex-row justify-between bg-gray-100`}>
           <Icon name={item.iconName} size={24} color="red" />
              <Text style={tw`text-gray-700 font-bold`}>{item.title}</Text>
@@ -110,7 +156,7 @@ const HomePage = ({navigation}) => {
     <Text style={tw`text-md font-bold text-gray-600 mt-5`}>
     Transactions
     </Text>
-    <TouchableOpacity style={tw`bg-gray-200 px-4 py-2 rounded-lg mt-2`} onPress={() => navigation.navigate('Operations')}>
+    <TouchableOpacity style={tw`bg-gray-200 px-4 py-2 rounded-lg mt-2`} onPress={() => navigation.navigate('allOperations')}>
         <Text style={tw`text-gray-700 font-bold`}>All</Text>
     </TouchableOpacity>
   </View>
@@ -118,7 +164,7 @@ const HomePage = ({navigation}) => {
               return <TouchableOpacity onPress={() => navigation.navigate('DetailTransaction')} key={item.id} >
               <View style={tw`bg-white mt-4 rounded p-2 shadow-md`}>
                 <View style={tw`flex flex-row justify-between mb-2`}>
-                  <Text style={tw`text-red-800`}>{item.type}</Text>
+                  <Text style={tw`text-red-600`}>{item.type}</Text>
                   <Text>{item.montant} FCFA</Text>
                 </View>
                 <Text>{item.date}</Text>
@@ -130,7 +176,7 @@ const HomePage = ({navigation}) => {
     
     
 
-</View>
+</View>}
     </ScrollView>
 
   );
@@ -173,3 +219,4 @@ const styles = StyleSheet.create({
 });
 
 export default HomePage;
+

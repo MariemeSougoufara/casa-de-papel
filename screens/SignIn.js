@@ -1,30 +1,75 @@
-import React, { useState } from 'react';
-import { View, Text, TextInput, TouchableOpacity, StyleSheet, Image } from 'react-native';
+import React, { useState, useEffect } from 'react';
+import { View, Text, TextInput, TouchableOpacity, StyleSheet, Image, ActivityIndicator } from 'react-native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { loginUser } from '../services/userService';
 
 const SignIn = ({ navigation }) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [emailValid, setEmailValid] = useState(true);
   const [passwordValid, setPasswordValid] = useState(true);
+  const [loading, setLoading] = useState(false);
+  const [message, setMessage] = useState(null); // Message for success or failure
 
   const validateEmail = (email) => {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     return emailRegex.test(email);
   };
 
-  const handleSignIn = () => {
+  useEffect(() => {
+    if (message) {
+      const timer = setTimeout(() => {
+        setMessage(null);
+      }, 1000);
+
+      return () => clearTimeout(timer);
+    }
+  }, [message]);
+  const setToken = async (token) =>{
+    try {
+      await AsyncStorage.setItem(
+        'token',token
+      );
+
+      await AsyncStorage.setItem(
+        "email", email
+      );
+    } catch (error) {
+      // Error saving data
+    }
+  }
+  const handleSignIn = async () => {
     if (!validateEmail(email)) {
       setEmailValid(false);
       return;
     }
-<<<<<<< HEAD
 
-    // Redirection vers la page "HomeScreen"
-    navigation.navigate('HomeScreen');
-=======
-    // Redirection vers la page "HomeScreen"
-    navigation.navigate('HomePage');
->>>>>>> ddba7b7 (envoie de mail, integration de l'api)
+    setLoading(true); // Start loading spinner
+
+    try {
+      const loginRequest = {
+        email: email,
+        password: password,
+      };
+
+      const response = await loginUser(loginRequest); // Assuming loginUser returns a promise
+      setLoading(false); // Stop loading spinner
+
+      // Handle successful login
+      if (response.token) {
+        setMessage({ type: 'success', text: 'Connexion réussie' });
+        setTimeout(() => {
+          setMessage(null);
+          setToken(response.token);
+          navigation.navigate('HomePage');
+        }, 2000); // Clear message after 2 seconds
+      } else {
+        setMessage({ type: 'error', text: 'Email ou mot de passe incorrect' });
+      }
+    } catch (error) {
+      setLoading(false); // Stop loading spinner on error
+      setMessage({ type: 'error', text: 'Email ou mot de passe incorrect' });
+    }
   };
 
   return (
@@ -34,10 +79,10 @@ const SignIn = ({ navigation }) => {
         <Text style={styles.topBarText}>Casa De Papel</Text>
       </View>
       <View style={styles.headerContainer}>
-      <Image source={require('../assets/happyImage.png')} style={styles.happyImage} />
-      <View>
-        <Text style={styles.title}>Content de vous revoir !</Text>
-        <Text style={styles.subtitle}>Connectez-vous.</Text>
+        <Image source={require('../assets/happyImage.png')} style={styles.happyImage} />
+        <View>
+          <Text style={styles.title}>Content de vous revoir !</Text>
+          <Text style={styles.subtitle}>Connectez-vous.</Text>
         </View>
       </View>
       <View style={styles.contentContainer}>
@@ -67,6 +112,12 @@ const SignIn = ({ navigation }) => {
         <TouchableOpacity style={styles.button} onPress={handleSignIn}>
           <Text style={styles.buttonText}>Connexion</Text>
         </TouchableOpacity>
+        {loading && <ActivityIndicator size="large" color="red" paddingHorizontal="12"/>}
+        {message && (
+          <View style={[styles.messageContainer, { backgroundColor: message.type === 'success' ? 'green' : 'red' }]}>
+            <Text style={styles.messageText}>{message.text}</Text>
+          </View>
+        )}
         <View style={styles.signUpContainer}>
           <Text style={styles.text}>Nouveau sur Casa De Papel ?</Text>
           <TouchableOpacity onPress={() => navigation.navigate('SignUp')}>
@@ -96,7 +147,7 @@ const styles = StyleSheet.create({
     justifyContent: 'flex-start',
     paddingHorizontal: 20,
     paddingVertical: 5,
-    backgroundColor: 'black', 
+    backgroundColor: 'black',
     width: '100%',
   },
   logo: {
@@ -107,14 +158,14 @@ const styles = StyleSheet.create({
   topBarText: {
     fontSize: 20,
     fontWeight: 'bold',
-    color: 'white', 
+    color: 'white',
     marginLeft: 10,
   },
   headerContainer: {
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
-    marginTop: 150, 
+    marginTop: 150,
   },
   happyImage: {
     width: 50,
@@ -136,7 +187,7 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     paddingHorizontal: 20,
-    marginTop: -240, 
+    marginTop: -240,
   },
   input: {
     height: 50,
@@ -180,6 +231,22 @@ const styles = StyleSheet.create({
   errorMessage: {
     color: 'black',
     marginBottom: 10,
+  },
+  messageContainer: {
+    backgroundColor: 'green',
+    paddingVertical: 10,
+    paddingHorizontal: 15,
+    borderRadius: 5,
+    marginTop: 10,
+    alignItems: 'center',
+    position: 'absolute',
+    top: 20,
+    right: 20,
+  },
+  messageText: {
+    color: 'white',
+    fontWeight: 'bold',
+    fontSize: 12,
   },
 });
 
