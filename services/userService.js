@@ -67,6 +67,42 @@ const findUserByEmail = async (email, token) => {
       throw error;
     }
   };
+
+const getUserTransactions = async (email, token) => {
+    try {
+        const response = await fetch(`${API_URL}/transaction/${email}`, {
+          method: 'GET',
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${token}`,
+          },
+        });
+    
+        const userData = await response.json();
+        return userData;
+      } catch (error) {
+        console.error('Erreur by finding user transactions', error);
+        throw error;
+      }
+}
+
+const getUserAccountInformation =  async (email, token) => {
+  try {
+      const response = await fetch(`${API_URL}/compte/${email}`, {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`,
+        },
+      });
+  
+      const userData = await response.json();
+      return userData;
+    } catch (error) {
+      console.error('Erreur by finding user account informationd', error);
+      throw error;
+    }
+}
   
 // Example usage:
 // const newUser = {
@@ -96,4 +132,10 @@ const findUserByEmail = async (email, token) => {
 //     console.error("Error logging in user:", error);
 // });
 
-export { registerUser, loginUser, findUserByEmail};
+export { 
+  registerUser, 
+  loginUser, 
+  findUserByEmail,
+  getUserAccountInformation,
+  getUserTransactions
+};

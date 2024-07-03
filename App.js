@@ -15,6 +15,7 @@ import IdentityVerificationSuccessPage from './screens/IdentityVerificationSuces
 import VerificationPage from './screens/VerificationPage';
 import AllOperationPage from './screens/AllOperationsPage';
 import Plafond from './screens/Plafond';
+import Virement from './screens/Virement';
 
 const Stack =  createNativeStackNavigator();
 export default function App() {
@@ -56,13 +57,15 @@ export default function App() {
         component={VerificationPage}
       />
     
-    
-      
       <Stack.Screen
           name="SignIn"
           component={SignIn}
           options={{ headerShown: true}}
         />
+      <Stack.Screen 
+        name="VirementScreen"
+        component={Virement}
+      />
        
         <Stack.Screen
           name="ForgetPassword"

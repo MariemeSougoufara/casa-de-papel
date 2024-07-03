@@ -4,6 +4,8 @@ import DetailTransaction from "./detailTransaction";
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { TouchableOpacity, Text } from "react-native";
+import SettingsScreen from "./Settings";
+import ProfileScreen from "./Profile";
 
 
 const Tab = createBottomTabNavigator();
@@ -22,7 +24,7 @@ const ScreenBottomNavHandler = () => {
                         iconName = focused ? 'account' : 'account-outline';
                         color = "black"
                     } else if (route.name === 'Settings') {
-                        iconName = focused ? 'account' : 'account-outline';
+                        iconName = focused ? 'cog' : 'cog-outline';
                         color = "black"
                     }   
                     return <Icon name={iconName} size={size} color={color} />;
@@ -36,9 +38,9 @@ const ScreenBottomNavHandler = () => {
                 ),
             })} 
         >
-        <Tab.Screen name="Profile" component={DetailTransaction} />
+        <Tab.Screen name="Profile" component={ProfileScreen} />
         <Tab.Screen name="Home" component={HomePage} />
-            <Tab.Screen name="Settings" component={HomePage} />
+        <Tab.Screen name="Settings" component={SettingsScreen} />
         </Tab.Navigator>    
     )
 }

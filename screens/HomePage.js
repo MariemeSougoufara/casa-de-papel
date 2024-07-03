@@ -10,7 +10,7 @@ import { View, Text, StyleSheet, Image, TouchableOpacity, ScrollView, ActivityIn
 import logo from '../assets/logo.png'
 import { listOfOperations } from '../utils/utils';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { findUserByEmail } from '../services/userService';
+import { findUserByEmail, getUserAccountInformation, getUserTransactions } from '../services/userService';
 import ErrorScreen from './ErrorScreen';
 import Loading from './Loading';
 
@@ -28,6 +28,15 @@ const HomePage = ({navigation}) => {
     prenom: "",
     telephone: ""
   };
+  const informationsCompteIni  = {
+    dateCreation: "", 
+    etatCompte: true, 
+    idCompte: "", 
+    montantInitial:null, 
+    numCompte: "",
+     plafonds: null, 
+     proprietaire: ""
+  }
   const handleRetry = () =>{
     return ;
   }
@@ -39,6 +48,8 @@ const HomePage = ({navigation}) => {
     const [user, setUser] = useState(userDetails);
     const [loading, setLoading] = useState(false);
     const [error,  setError] = useState(null);
+    const [transactions, setTransactions] = useState([]);
+    const [informationCompte, setInformationCompte] = useState(informationsCompteIni);
 
    const setTokenAndEmail  = async () => {
       setToken(await AsyncStorage.getItem("token"));
@@ -54,6 +65,10 @@ const HomePage = ({navigation}) => {
         try {
           const userData = await findUserByEmail(email, token);
           setUser(userData);
+          const transactionData = await getUserTransactions(email, token);
+          const userAccountInfo = await getUserAccountInformation(email, token);
+          setTransactions(transactionData);
+          setInformationCompte(userAccountInfo);
         } catch (error) {
           setError(error.message);
         } finally {
@@ -64,46 +79,8 @@ const HomePage = ({navigation}) => {
       if (email && token) {
         fetchUser();
       }
+      
     },[email, token])
-
-    const historiqueTransaction = [
-      {
-          id: 1,
-          date: '2024-01-15',
-          type: 'dépôt',
-          montant: 500.00,
-          description: 'Dépôt initial'
-      },
-      {
-          id: 2,
-          date: '2024-01-20',
-          type: 'retrait',
-          montant: 100.00,
-          description: 'Retrait au guichet'
-      },
-      {
-          id: 3,
-          date: '2024-02-05',
-          type: 'dépôt',
-          montant: 200.00,
-          description: 'Virement salaire'
-      },
-      {
-          id: 4,
-          date: '2024-02-10',
-          type: 'paiement',
-          montant: 50.00,
-          description: 'Paiement facture électricité'
-      },
-      {
-          id: 5,
-          date: '2024-02-15',
-          type: 'retrait',
-          montant: 75.00,
-          description: 'Retrait DAB'
-      }
-  ];
-  
 
   
   return (
@@ -112,7 +89,7 @@ const HomePage = ({navigation}) => {
       <Loading />
        :  
     <View style={tw`w-full h-full bg-white p-5 `}>
-    <View style={tw`bg-black height flex-row justify-between h-45 rounded`}>
+    <View style={tw`bg-black flex-row justify-between h-45 rounded`}>
         <View style={tw`p-4 justify-between`}>
             <View>
               <Text style={tw`text-white font-bold text-lg`}>{user.nom}{ user.prenom}</Text>
@@ -120,8 +97,8 @@ const HomePage = ({navigation}) => {
             <Text style={tw`text-white font-bold text-lg`}>
                 SOLDE
             </Text>
-            <Text style={tw`text-white text-2xl font-bold`}>
-                {solde} FCFA
+            <Text style={tw`text-red-600 text-2xl font-bold`}>
+                {informationCompte.montantInitial} FCFA
             </Text>
         </View>
         <View>
@@ -160,17 +137,28 @@ const HomePage = ({navigation}) => {
         <Text style={tw`text-gray-700 font-bold`}>All</Text>
     </TouchableOpacity>
   </View>
-            {historiqueTransaction.map((item) =>{
-              return <TouchableOpacity onPress={() => navigation.navigate('DetailTransaction')} key={item.id} >
-              <View style={tw`bg-white mt-4 rounded p-2 shadow-md`}>
-                <View style={tw`flex flex-row justify-between mb-2`}>
-                  <Text style={tw`text-red-600`}>{item.type}</Text>
-                  <Text>{item.montant} FCFA</Text>
-                </View>
-                <Text>{item.date}</Text>
+  {
+  loading ? (
+    <Loading />  // Affiche un composant de chargement pendant que les transactions se chargent
+  ) : (
+    transactions.length === 0 ? (
+      <Text>Aucune transaction disponible</Text>  // Affiche un message s'il n'y a pas de transactions
+    ) : (
+      transactions.map((item) => (
+        <TouchableOpacity onPress={() => navigation.navigate('DetailTransaction')} key={item.id}>
+          <View style={tw`bg-white mt-4 rounded p-2 shadow-md`}>
+            <View style={tw`flex flex-row justify-between mb-2`}>
+              <Text style={tw`text-red-600`}>{item.typeTransaction}</Text>
+              <Text>{item.montantTransaction} FCFA</Text>
             </View>
-              </TouchableOpacity>
-            })}
+            <Text>{item.dateTransaction}</Text>
+          </View>
+        </TouchableOpacity>
+      ))
+    )
+  )
+}
+
     </View>
 
     

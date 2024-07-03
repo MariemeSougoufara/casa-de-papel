@@ -9,9 +9,7 @@ const PersonalInfo = ({ navigation, route }) => {
     const [focusedInput, setFocusedInput] = useState(null);
     const [isLoading, setIsLoading] = useState(false); // State for loading indicator
 
-    useEffect(() => {
-        console.log(route.params);
-    }, []);
+  
 
     const validationSchema = Yup.object().shape({
         nom: Yup.string().required('Le nom est requis'),
@@ -34,7 +32,6 @@ const PersonalInfo = ({ navigation, route }) => {
 
         try {
             await registerUser(userDetails);
-            console.log("User registered successfully");
             navigation.navigate("SignIn");
         } catch (error) {
             console.error('Registration failed:', error.message);
