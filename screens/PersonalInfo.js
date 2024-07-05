@@ -1,36 +1,15 @@
 import React, { useState, useEffect } from 'react';
-import { SafeAreaView, View, TextInput, Text, TouchableOpacity, StyleSheet, ScrollView } from 'react-native';
+import { SafeAreaView, View, TextInput, Text, TouchableOpacity, StyleSheet, ScrollView, ActivityIndicator } from 'react-native';
 import { Formik } from 'formik';
 import * as Yup from 'yup';
-import userService from '../services/userService';
-import { Button } from 'react-native-elements';
-// import axios  from "axios";
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { registerUser } from '../services/userService';
 
-
-
-const PersonalInfo = ({ navigation }) => {
-    useEffect(() => {
-<<<<<<< HEAD
-        const user = {
-            nom: "Doe",
-            prenom: "Diouf",
-            datenaissance: "2024-05-29T00:00:00Z",
-            adresse: "123 Main St, City, Country",
-            motdepasse: "password123",
-            email: "john.doe@example.com",
-            dateinscription: "2024-05-29T00:00:00Z",
-            dernieracces: "2024-05-29T00:00:00Z"
-        }
-
-        // createNewUser(user);
-        userService.getUser();
-        // userService.getUser();
-=======
-        
->>>>>>> ddba7b7 (envoie de mail, integration de l'api)
-    }, []);
-
+const PersonalInfo = ({ navigation, route }) => {
     const [focusedInput, setFocusedInput] = useState(null);
+    const [isLoading, setIsLoading] = useState(false); // State for loading indicator
+
+  
 
     const validationSchema = Yup.object().shape({
         nom: Yup.string().required('Le nom est requis'),
@@ -39,37 +18,43 @@ const PersonalInfo = ({ navigation }) => {
         telephone: Yup.string().required('Le téléphone est requis'),
         dateNaissance: Yup.string()
             .required('La date de naissance est requise')
-            .matches(/^\d{2}\/\d{2}\/\d{4}$/, 'La date de naissance doit être au format JJ/MM/AAAA'),
-        sexe: Yup.string().required('Le sexe est requis'),
-        pays: Yup.string().required('Le pays est requis'),
-        motDePasse: Yup.string()
-            .required('Le mot de passe est requis')
-            .min(8, 'Le mot de passe doit contenir au moins 8 caractères')
+            .matches(/^\d{4}-\d{2}-\d{2}$/, 'La date de naissance doit être au format YYYY-MM-DD'),
     });
+
+    const handleFormSubmit = async (values) => {
+        const userDetails = {
+            ...values,
+            email: route.params.email,
+            motDePasse: route.params.motDePasse,
+        };
+
+        setIsLoading(true); // Start loading indicator
+
+        try {
+            await registerUser(userDetails);
+            navigation.navigate("SignIn");
+        } catch (error) {
+            console.error('Registration failed:', error.message);
+        } finally {
+            setIsLoading(false); // Stop loading indicator
+        }
+    };
 
     return (
         <SafeAreaView style={style.container}>
             <ScrollView contentContainerStyle={style.scrollViewContent}>
                 <Formik
                     initialValues={{
-                        email: '',
                         nom: '',
                         prenom: '',
+                        dateNaissance: '',
                         addresse: '',
                         telephone: '',
-                        dateNaissance: '',
-                        sexe: '',
-                        pays: '',
-                        motDePasse: ''
                     }}
                     validationSchema={validationSchema}
-                    onSubmit = { (values) => {
-                        console.log(values);
-                        
-                        navigation.navigate('HomePage');
-                    }}
+                    onSubmit={handleFormSubmit}
                 >
-                    {({ handleChange, handleBlur, handleSubmit, setFieldValue, values, touched, errors }) => (
+                    {({ handleChange, handleBlur, handleSubmit, values, touched, errors }) => (
                         <View style={style.formContainer}>
                             <View>
                                 <TextInput
@@ -151,7 +136,7 @@ const PersonalInfo = ({ navigation }) => {
                                         focusedInput === 'dateNaissance' && style.focusedInputStyle,
                                         touched.dateNaissance && errors.dateNaissance && style.errorInputStyle
                                     ]}
-                                    placeholder="Date de Naissance (JJ/MM/AAAA)"
+                                    placeholder="Date de Naissance (YYYY-MM-DD)"
                                     onFocus={() => setFocusedInput('dateNaissance')}
                                     onBlur={() => {
                                         handleBlur('dateNaissance');
@@ -167,6 +152,13 @@ const PersonalInfo = ({ navigation }) => {
                                     <Text style={style.floatingButtonText}>Suivant</Text>
                                 </TouchableOpacity>
                             </View>
+                            {isLoading && (
+                                <ActivityIndicator
+                                    size="large"
+                                    color="red"
+                                    style={{ marginTop: 20 }}
+                                />
+                            )}
                         </View>
                     )}
                 </Formik>
@@ -177,20 +169,12 @@ const PersonalInfo = ({ navigation }) => {
 
 const style = StyleSheet.create({
     inputStyle: {
-        // padding: 15,
-        // borderRadius: 12,
-        // borderStyle: 'solid',
-        // borderColor: 'grey',
-        // marginBottom: 20,
-        // backgroundColor: '#EEEEEE',
-        // fontSize: 16,
-        // borderWidth: 0.6
         height: 50,
         width: '100%',
         borderColor: 'gray',
         borderWidth: 1,
         borderRadius: 5,
-        marginBottom: 20, // Espace ajouté entre les champs de saisie
+        marginBottom: 20,
         paddingHorizontal: 10,
         color: 'black',
     },
@@ -214,34 +198,10 @@ const style = StyleSheet.create({
         alignItems: 'center',
         marginBottom: 20,
     },
-    phoneInputStyle: {
-        flex: 1,
-        padding: 15,
-        borderRadius: 12,
-        borderStyle: 'solid',
-        borderColor: 'grey',
-        backgroundColor: '#EEEEEE',
-        fontSize: 16,
-        borderWidth: 0.6,
-    },
-    pickerStyle: {
-        padding: 15,
-        borderRadius: 12,
-        borderStyle: 'solid',
-        borderColor: 'grey',
-        marginBottom: 20,
-        backgroundColor: '#EEEEEE',
-        fontSize: 16,
-        borderWidth: 0.6,
-    },
     buttonContainer: {
         borderRadius: 50,
     },
     floatingButton: {
-        // backgroundColor: '#007AFF',
-        // borderRadius: 50,
-        // paddingVertical: 15,
-        // paddingHorizontal: 30,
         backgroundColor: 'red',
         width: '100%',
         alignItems: 'center',
@@ -255,9 +215,8 @@ const style = StyleSheet.create({
         fontWeight: 'bold',
     },
     errorText: {
-        color: 'black',
+        color: 'red',
         marginBottom: 10,
-        fontWeight:'black'
     },
 });
 

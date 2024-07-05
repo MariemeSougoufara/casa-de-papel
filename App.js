@@ -20,6 +20,11 @@ import ActivationStepsPage from './screens/ActivationStepsPage';
 import SecurityCodePage from './screens/SecurityCodePage';
 import CardActivationCompletionPage from './screens/CardActivationCompletionPage'; 
 
+import IdentityVerificationSuccessPage from './screens/IdentityVerificationSucessPage';
+import VerificationPage from './screens/VerificationPage';
+import AllOperationPage from './screens/AllOperationsPage';
+import Plafond from './screens/Plafond';
+import Virement from './screens/Virement';
 
 const Stack =  createNativeStackNavigator();
 export default function App() {
@@ -32,34 +37,50 @@ export default function App() {
           options={{ headerShown: false }}
         />
 
-    <Stack.Screen
-    name="SignUp"
-    component={SignUp}
-  />
+   
     <Stack.Screen
           name="LandingPage"
           component={LandingPage}
           options={{ headerShown: false }}
         />
-        <Stack.Screen
-      name="EmailValidation"
-      component={EmailValidation}  
-      /> 
-    <Stack.Screen
+         <Stack.Screen
           name="PersonalScreen"
           component={PersonalInfo}
         />
-    <Stack.Screen
+        <Stack.Screen
         name="HomePage"
         component={ScreenBottomNavHandler}
         options={{ headerShown: false }}
       /> 
-      
+    <Stack.Screen
+    name="SignUp"
+    component={SignUp}
+    
+  />
+    
+        <Stack.Screen
+      name="EmailValidation"
+      component={EmailValidation}  
+      /> 
+      <Stack.Screen  
+        name="IdentityVerificationSuccess"
+        component={IdentityVerificationSuccessPage}
+      />
+
+      <Stack.Screen 
+        name="VerificationPage"
+        component={VerificationPage}
+      />
+    
       <Stack.Screen
           name="SignIn"
           component={SignIn}
           options={{ headerShown: true}}
         />
+      <Stack.Screen 
+        name="VirementScreen"
+        component={Virement}
+      />
        
         <Stack.Screen
           name="ForgetPassword"
@@ -104,6 +125,15 @@ export default function App() {
           name="CardActivationCompletionPage"
           component={CardActivationCompletionPage}
           options={{ title: 'Activation terminée' }}
+        />
+        <Stack.Screen
+          name='allOperations'
+          title="Operations"
+          component={AllOperationPage}
+        />
+        <Stack.Screen 
+          name="Plafond"
+          component={Plafond}
         />
       </Stack.Navigator>
     </NavigationContainer>

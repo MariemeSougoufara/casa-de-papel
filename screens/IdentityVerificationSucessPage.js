@@ -22,6 +22,7 @@ const IdentityVerificationSuccessPage = () => {
         />
         <Text style={styles.message}>Votre identité a été vérifiée avec succès</Text>
       </View>
+      
     </View>
   );
 };

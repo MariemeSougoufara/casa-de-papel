@@ -1,9 +1,6 @@
 import React, { useState } from 'react';
 import { View, Text, TextInput, TouchableOpacity, StyleSheet, Image } from 'react-native';
-<<<<<<< HEAD
-=======
 import { sendConfirmationCode } from '../utils/mailer';
->>>>>>> ddba7b7 (envoie de mail, integration de l'api)
 
 const SignUp = ({ navigation }) => {
   const [email, setEmail] = useState('');
@@ -12,9 +9,6 @@ const SignUp = ({ navigation }) => {
   const [passwordsMatch, setPasswordsMatch] = useState(true);
   const [emailValid, setEmailValid] = useState(true);
   const [passwordValid, setPasswordValid] = useState(true);
-<<<<<<< HEAD
-
-=======
   const [validationCode, setValidationCode] = useState(0);
 
   const handleValidationVariables = async () => {
@@ -22,7 +16,6 @@ const SignUp = ({ navigation }) => {
     setValidationCode(code);
     return code;
   }
->>>>>>> ddba7b7 (envoie de mail, integration de l'api)
   const validateEmail = (email) => {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     return emailRegex.test(email);
@@ -33,11 +26,7 @@ const SignUp = ({ navigation }) => {
     return passwordRegex.test(password);
   };
 
-<<<<<<< HEAD
-  const handleSignUp = () => {
-=======
   const handleSignUp = async () => {
->>>>>>> ddba7b7 (envoie de mail, integration de l'api)
     if (!validateEmail(email)) {
       setEmailValid(false);
       return;
@@ -50,18 +39,16 @@ const SignUp = ({ navigation }) => {
       setPasswordsMatch(false);
       return;
     }
-<<<<<<< HEAD
-
-    // Redirection vers la page "EmailValidation"
-    navigation.navigate('EmailValidation');
-=======
  
     const code = await handleValidationVariables();
     console.log(code);
 
     // Redirection vers la page "EmailValidation"
-    navigation.navigate('EmailValidation', { validationCode: code });
->>>>>>> ddba7b7 (envoie de mail, integration de l'api)
+    navigation.navigate('EmailValidation', { 
+      validationCode: code,
+      email:email,
+      password:password
+     });
   };
 
   return (

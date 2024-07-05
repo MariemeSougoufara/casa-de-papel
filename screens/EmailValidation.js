@@ -9,7 +9,10 @@ const EmailValidation = ({ navigation, route }) => {
   const handleEmailValidation = () => {
     if (code === validationCode.toString()) {
       // Redirection vers la page "PersonalScreen"
-      navigation.navigate('PersonalScreen');
+      navigation.navigate('PersonalScreen', {
+        email:route.params.email,
+        motDePasse:route.params.password
+      });
     } else {
       setErrorMessage('Code de validation incorrect. Veuillez réessayer.');
     }
