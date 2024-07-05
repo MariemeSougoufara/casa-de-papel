@@ -1,15 +1,6 @@
 import React, { useState } from 'react';
 import { View, Text, TextInput, TouchableOpacity, StyleSheet, Image } from 'react-native';
 
-<<<<<<< HEAD
-const EmailValidation = ({ navigation }) => {
-  const [code, setCode] = useState('');
-
-  const handleEmailValidation = () => {
-
-    // Redirection vers la page "PersonalScreen"
-    navigation.navigate('PersonalScreen');
-=======
 const EmailValidation = ({ navigation, route }) => {
   const [code, setCode] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
@@ -22,7 +13,6 @@ const EmailValidation = ({ navigation, route }) => {
     } else {
       setErrorMessage('Code de validation incorrect. Veuillez réessayer.');
     }
->>>>>>> ddba7b7 (envoie de mail, integration de l'api)
   };
 
   return (
@@ -33,25 +23,13 @@ const EmailValidation = ({ navigation, route }) => {
       </View>
       <View style={styles.headerContainer}>
         <Text style={styles.title}>Vous y êtes Presque !</Text>
-<<<<<<< HEAD
-        <Text style={styles.subtitle1}>Un code vous a été envoyé sur votre Email.</Text>
-        <Text style={styles.subtitle2}>Veuillez le renseigner.</Text>
-=======
         <Text style={styles.subtitle1}>Un code vous a été envoyé sur votre Email. Veuillez le renseigner</Text>
->>>>>>> ddba7b7 (envoie de mail, integration de l'api)
       </View>
       <View style={styles.contentContainer}>
         <TextInput
           style={styles.input}
-          placeholder="Code de validation"
-          onChangeText={(text) => setCode(text)}
-          value={code}
-          keyboardType="numeric"
         />
-<<<<<<< HEAD
-=======
         {errorMessage ? <Text style={styles.errorMessage}>{errorMessage}</Text> : null}
->>>>>>> ddba7b7 (envoie de mail, integration de l'api)
         <TouchableOpacity style={styles.button} onPress={handleEmailValidation}>
           <Text style={styles.buttonText}>Valider</Text>
         </TouchableOpacity>
@@ -73,11 +51,7 @@ const styles = StyleSheet.create({
     justifyContent: 'flex-start',
     paddingHorizontal: 20,
     paddingVertical: 5,
-<<<<<<< HEAD
-    backgroundColor: 'black', 
-=======
     backgroundColor: 'black',
->>>>>>> ddba7b7 (envoie de mail, integration de l'api)
     width: '100%',
   },
   logo: {
@@ -88,20 +62,12 @@ const styles = StyleSheet.create({
   topBarText: {
     fontSize: 20,
     fontWeight: 'bold',
-<<<<<<< HEAD
-    color: 'white', 
-=======
     color: 'white',
->>>>>>> ddba7b7 (envoie de mail, integration de l'api)
     marginLeft: 10,
   },
   headerContainer: {
     alignItems: 'center',
-<<<<<<< HEAD
-    marginTop: 150, 
-=======
     marginTop: 150,
->>>>>>> ddba7b7 (envoie de mail, integration de l'api)
   },
   title: {
     fontSize: 24,
@@ -113,11 +79,8 @@ const styles = StyleSheet.create({
     color: 'black',
     marginTop: 40,
     marginBottom: 20,
-<<<<<<< HEAD
-=======
     padding: 10,
     textAlign: 'center',
->>>>>>> ddba7b7 (envoie de mail, integration de l'api)
   },
   subtitle2: {
     fontSize: 18,
@@ -129,11 +92,7 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     paddingHorizontal: 20,
-<<<<<<< HEAD
-    marginTop: -320, 
-=======
     marginTop: -320,
->>>>>>> ddba7b7 (envoie de mail, integration de l'api)
   },
   input: {
     height: 50,
@@ -157,24 +116,15 @@ const styles = StyleSheet.create({
     color: 'white',
     fontSize: 18,
     fontWeight: 'bold',
-<<<<<<< HEAD
-  },  
-=======
   },
->>>>>>> ddba7b7 (envoie de mail, integration de l'api)
   text: {
     fontSize: 16,
     color: 'black',
   },
   errorMessage: {
-<<<<<<< HEAD
-    color: 'black',
-    marginBottom: 10,
-=======
     color: 'red',
     marginBottom: 10,
     textAlign: 'center',
->>>>>>> ddba7b7 (envoie de mail, integration de l'api)
   },
 });
 

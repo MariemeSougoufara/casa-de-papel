@@ -16,11 +16,7 @@ const ForgetPassword = ({ navigation }) => {
       setEmailValid(false);
       return;
     }
-<<<<<<< HEAD
-
-=======
     
->>>>>>> ddba7b7 (envoie de mail, integration de l'api)
     navigation.navigate('SignIn');
   };
 
@@ -33,13 +29,7 @@ const ForgetPassword = ({ navigation }) => {
       <View style={styles.headerContainer}>
         <Text style={styles.title1}>Mot de Passe oublié ?</Text>
         <Text style={styles.title2}>Pas de Panique !</Text>
-<<<<<<< HEAD
-        <Text style={styles.subtitle1}>Veuillez renseigner votre Email et un code vous</Text>
-        <Text style={styles.subtitle2}>sera envoyé pour récupérer votre</Text>
-        <Text style={styles.subtitle3}>mot de passe.</Text>
-=======
         <Text style={styles.subtitle1}>Veuillez renseigner votre Email et un code vous sera envoyé pour récupérer votre mot de passe.</Text>
->>>>>>> ddba7b7 (envoie de mail, integration de l'api)
       </View>
       <View style={styles.contentContainer}>
         <TextInput
@@ -98,12 +88,8 @@ const styles = StyleSheet.create({
   },
   headerContainer: {
     alignItems: 'center',
-<<<<<<< HEAD
-    marginTop: 150, 
-=======
     marginTop: 100,
     paddingHorizontal: 20, 
->>>>>>> ddba7b7 (envoie de mail, integration de l'api)
   },
   title1: {
     fontSize: 24,
