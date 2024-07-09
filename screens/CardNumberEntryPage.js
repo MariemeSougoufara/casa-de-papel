@@ -16,7 +16,6 @@ const CardNumberEntryPage = ({ navigation }) => {
   };
 
   const handleOk = () => {
-    console.log('Code de l\'app saisi:', appCode);
     setIsModalVisible(false);
     navigation.navigate('ActivationConfirmationPage'); // Redirection vers la page de confirmation
   };
@@ -38,7 +37,7 @@ const CardNumberEntryPage = ({ navigation }) => {
         keyboardShouldPersistTaps="handled"
       >
         <Image
-          source={require('../assets/activationcarte1.jpg')}
+          source={require('../assets/CarteActivee.png')}
           style={styles.cardImage}
         />
         <Text style={styles.instructionText}>
@@ -55,7 +54,7 @@ const CardNumberEntryPage = ({ navigation }) => {
         <Button
           title="Continuer"
           onPress={handleContinue}
-          color="#007BFF"
+          color="red"
         />
       </ScrollView>
 

@@ -49,7 +49,7 @@ const SecurityCodePage = () => {
         <Image source={logo} style={styles.logo} />
         {/* Texte de la bannière */}
         <View>
-          <Text style={styles.bannerText}>Demande du code secret</Text>
+          <Text style={styles.bannerText}>Casa De Papel</Text>
         </View>
       </View>
 
@@ -72,9 +72,8 @@ const SecurityCodePage = () => {
         </TouchableOpacity>
       )}
 
-      {/* Image "activationcarte1.jpg" */}
       <Image
-        source={require('../assets/activationcarte1.jpg')}
+        source={require('../assets/credit-card.png')}
         style={styles.image}
       />
 
@@ -107,7 +106,9 @@ const SecurityCodePage = () => {
             onChangeText={setMessageToSend}
             placeholder="Coller le code ici"
           />
-          <Button title="Envoyer" onPress={sendMessage} />
+          <TouchableOpacity style={styles.sendButton} onPress={sendMessage}>
+            <Text style={styles.sendButtonText}>Envoyer</Text>
+          </TouchableOpacity>
         </View>
       )}
 
@@ -143,7 +144,7 @@ const styles = StyleSheet.create({
   bannerText: {
     color: 'white',
     fontWeight: 'bold',
-    fontSize: 16,
+    fontSize: 18,
     marginLeft: 50, // Espace entre le logo et le texte (réduit à 50)
   },
   logo: {
@@ -151,12 +152,13 @@ const styles = StyleSheet.create({
     height: 40, // Taille du logo, ajustez selon vos besoins
   },
   image: {
-    width: '100%',
-    height: 200,
+    width: 280, // Réduit la largeur de 350 à 280
+    height: 240, // Réduit la hauteur de 300 à 240
+    marginTop: -50,
     marginBottom: 30,
   },
   blueText: {
-    color: '#007BFF',
+    color: 'red',
     fontWeight: 'bold',
     fontSize: 16,
     marginBottom: 20,
@@ -166,7 +168,7 @@ const styles = StyleSheet.create({
     marginBottom: 20,
   },
   securityCodeBanner: {
-    backgroundColor: '#EAF0F9', // Couleur bleue claire
+    backgroundColor: 'red', 
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center', // Centrer horizontalement
@@ -238,8 +240,20 @@ const styles = StyleSheet.create({
     paddingHorizontal: 10,
     width: '100%',
   },
+  sendButton: {
+    backgroundColor: 'black',
+    paddingVertical: 10,
+    paddingHorizontal: 20,
+    borderRadius: 5,
+    marginTop: 10,
+  },
+  sendButtonText: {
+    color: 'white',
+    fontWeight: 'bold',
+    fontSize: 16,
+  },
   continueButton: {
-    backgroundColor: '#007BFF',
+    backgroundColor: 'red',
     paddingVertical: 10,
     paddingHorizontal: 20,
     borderRadius: 5,

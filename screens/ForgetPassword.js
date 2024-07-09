@@ -124,7 +124,7 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     paddingHorizontal: 20,
-    marginTop: -200, 
+    marginTop: -250, 
   },
   input: {
     height: 50,

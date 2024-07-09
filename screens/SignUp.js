@@ -41,7 +41,6 @@ const SignUp = ({ navigation }) => {
     }
  
     const code = await handleValidationVariables();
-    console.log(code);
 
     // Redirection vers la page "EmailValidation"
     navigation.navigate('EmailValidation', { 

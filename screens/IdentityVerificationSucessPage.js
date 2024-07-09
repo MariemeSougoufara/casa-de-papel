@@ -1,8 +1,14 @@
-// screens/IdentityVerificationSuccessPage.js
 import React from 'react';
-import { View, Text, StyleSheet, Image } from 'react-native';
+import { View, Text, StyleSheet, Image, TouchableOpacity } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
 
 const IdentityVerificationSuccessPage = () => {
+  const navigation = useNavigation();
+
+  const handleLoginPress = () => {
+    navigation.navigate('SignIn'); 
+  };
+
   return (
     <View style={styles.container}>
       {/* Bannière avec le logo */}
@@ -17,12 +23,14 @@ const IdentityVerificationSuccessPage = () => {
       {/* Contenu de la page */}
       <View style={styles.contentContainer}>
         <Image
-          source={require('../assets/okay.png')} /* Correction de l'extension de l'image */
+          source={require('../assets/okay.png')}
           style={styles.image}
         />
         <Text style={styles.message}>Votre identité a été vérifiée avec succès</Text>
+        <TouchableOpacity style={styles.button} onPress={handleLoginPress}>
+          <Text style={styles.buttonText}>Se connecter</Text>
+        </TouchableOpacity>
       </View>
-      
     </View>
   );
 };
@@ -35,7 +43,7 @@ const styles = StyleSheet.create({
   bannerContainer: {
     flexDirection: 'row',
     alignItems: 'center',
-    backgroundColor: 'black', // Changement de la couleur de la bannière en noir
+    backgroundColor: 'black',
     paddingVertical: 20,
     paddingHorizontal: 20,
   },
@@ -53,7 +61,7 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    marginTop: -5, // Ajustement de la marge vers le haut
+    marginTop: -5,
   },
   image: {
     width: 200,
@@ -64,6 +72,23 @@ const styles = StyleSheet.create({
     fontSize: 20,
     fontWeight: 'bold',
     textAlign: 'center',
+  },
+  button: {
+    position: 'absolute',
+    bottom: 30,
+    right: 20,
+    flexDirection: 'row',
+    alignItems: 'center',
+    backgroundColor: '#FF0000',
+    paddingVertical: 10,
+    paddingHorizontal: 20,
+    borderRadius: 5,
+  },
+  buttonText: {
+    color: 'white',
+    fontSize: 16,
+    marginRight: 10,
+    fontWeight: 'bold'
   },
 });
 

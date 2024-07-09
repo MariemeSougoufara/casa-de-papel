@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { View, Text, StyleSheet, Image, TouchableOpacity } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 
@@ -24,7 +24,7 @@ const CardActivationCompletionPage = () => {
 
       {/* Image "securitecarte.png" */}
       <Image
-        source={require('../assets/securitecarte.png')}
+        source={require('../assets/CarteActivee.png')}
         style={styles.image}
       />
 
@@ -52,6 +52,14 @@ const CardActivationCompletionPage = () => {
           <Text style={styles.actionText}>Réinitialiser code secret</Text>
         </TouchableOpacity>
       </View>
+
+      {/* Bouton "Retour à l'accueil" */}
+      <TouchableOpacity
+        style={styles.homeButton}
+        onPress={() => navigation.navigate('HomePage')}
+      >
+        <Text style={styles.homeButtonText}>Retour à l'accueil</Text>
+      </TouchableOpacity>
     </View>
   );
 };
@@ -93,7 +101,7 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 20,
     fontWeight: 'bold',
-    color: '#007BFF',
+    color: 'red',
     marginBottom: 20,
   },
   image: {
@@ -107,11 +115,11 @@ const styles = StyleSheet.create({
     marginBottom: 10,
   },
   statusText: {
-    color: '#007BFF',
+    color: 'red',
   },
   redText: {
     fontSize: 16,
-    color: 'red',
+    color: 'black',
     marginBottom: 20,
   },
   actionsContainer: {
@@ -123,7 +131,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     backgroundColor: 'white',
     borderWidth: 1,
-    borderColor: '#007BFF',
+    borderColor: 'red',
     borderRadius: 5,
     padding: 10,
     marginBottom: 15,
@@ -135,9 +143,21 @@ const styles = StyleSheet.create({
     marginRight: 10,
   },
   actionText: {
-    color: '#007BFF',
+    color: 'black',
     textAlign: 'center',
     flex: 1,
+  },
+  homeButton: {
+    backgroundColor: 'red',
+    paddingVertical: 10,
+    paddingHorizontal: 20,
+    borderRadius: 5,
+    marginTop: 20,
+  },
+  homeButtonText: {
+    color: 'white',
+    fontWeight: 'bold',
+    fontSize: 16,
   },
 });
 

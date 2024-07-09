@@ -31,6 +31,9 @@ const EmailValidation = ({ navigation, route }) => {
       <View style={styles.contentContainer}>
         <TextInput
           style={styles.input}
+          onChangeText={(text) => setCode(text)}
+          value={code}
+          keyboardType="numeric"
         />
         {errorMessage ? <Text style={styles.errorMessage}>{errorMessage}</Text> : null}
         <TouchableOpacity style={styles.button} onPress={handleEmailValidation}>

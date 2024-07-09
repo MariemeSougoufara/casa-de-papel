@@ -25,19 +25,16 @@ const SignIn = ({ navigation }) => {
       return () => clearTimeout(timer);
     }
   }, [message]);
-  const setToken = async (token) =>{
-    try {
-      await AsyncStorage.setItem(
-        'token',token
-      );
 
-      await AsyncStorage.setItem(
-        "email", email
-      );
+  const setToken = async (token) => {
+    try {
+      await AsyncStorage.setItem('token', token);
+      await AsyncStorage.setItem('email', email);
     } catch (error) {
       // Error saving data
     }
   }
+
   const handleSignIn = async () => {
     if (!validateEmail(email)) {
       setEmailValid(false);
@@ -61,7 +58,7 @@ const SignIn = ({ navigation }) => {
         setTimeout(() => {
           setMessage(null);
           setToken(response.token);
-          navigation.navigate('HomePage');
+          navigation.navigate('HomePage'); // Adjust this to navigate to your tab navigator
         }, 2000); // Clear message after 2 seconds
       } else {
         setMessage({ type: 'error', text: 'Email ou mot de passe incorrect' });
@@ -112,7 +109,7 @@ const SignIn = ({ navigation }) => {
         <TouchableOpacity style={styles.button} onPress={handleSignIn}>
           <Text style={styles.buttonText}>Connexion</Text>
         </TouchableOpacity>
-        {loading && <ActivityIndicator size="large" color="red" paddingHorizontal="12"/>}
+        {loading && <ActivityIndicator size="large" color="red" paddingHorizontal="12" />}
         {message && (
           <View style={[styles.messageContainer, { backgroundColor: message.type === 'success' ? 'green' : 'red' }]}>
             <Text style={styles.messageText}>{message.text}</Text>
