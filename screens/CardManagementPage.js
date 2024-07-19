@@ -18,7 +18,7 @@ const CardManagementPage = () => {
         </View>
         {/* Texte "Gestion carte bancaire" */}
         <View style={styles.textContainer}>
-          <Text style={styles.bannerText}>Gestion carte bancaire</Text>
+        <Text style={styles.topBarText}>Casa De Papel</Text>
         </View>
       </View>
 
@@ -27,7 +27,7 @@ const CardManagementPage = () => {
 
       {/* Image "securitecarte.png" */}
       <Image
-        source={require('../assets/securitecarte.png')}
+        source={require('../assets/credit-card.png')}
         style={styles.image}
       />
 
@@ -81,6 +81,28 @@ const styles = StyleSheet.create({
     paddingHorizontal: 0, // Supprimer les marges horizontales
     backgroundColor: 'white',
   },
+    topBar: {
+    // position: 'absolute',
+    // top: 0,
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'flex-start',
+    paddingHorizontal: 20,
+    paddingVertical: 5,
+    backgroundColor: 'black', 
+    width: '100%',
+  },
+  logo: {
+    width: 50,
+    height: 50,
+    resizeMode: 'contain',
+  },
+  topBarText: {
+    fontSize: 20,
+    fontWeight: 'bold',
+    color: 'white', 
+    marginLeft: 10,
+  },
   banner: {
     backgroundColor: 'black',
     width: '100%', // Occupe toute la largeur de l'écran
@@ -110,7 +132,7 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 20,
     fontWeight: 'bold',
-    color: '#007BFF', // Bleu
+    color: 'red', 
     marginBottom: 20,
   },
   image: {
@@ -124,11 +146,11 @@ const styles = StyleSheet.create({
     marginBottom: 10, // Réduire l'espace en bas
   },
   statusText: {
-    color: '#007BFF', // Bleu
+    color: 'red', 
   },
   redText: {
     fontSize: 16,
-    color: 'red',
+    color: '',
     marginBottom: 20, // Ajouter un espacement en bas
   },
   actionsContainer: {
@@ -140,7 +162,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     backgroundColor: 'white',
     borderWidth: 1,
-    borderColor: '#007BFF', // Bleu
+    borderColor: 'black', 
     borderRadius: 5,
     padding: 10,
     marginBottom: 15, // Augmentation de l'espace entre les bannières
@@ -152,7 +174,7 @@ const styles = StyleSheet.create({
     marginRight: 10,
   },
   actionText: {
-    color: '#007BFF', // Bleu
+    color: 'black', 
     textAlign: 'center',
     flex: 1, // Pour que le texte prenne l'espace restant
   },

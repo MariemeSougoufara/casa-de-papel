@@ -49,7 +49,7 @@ const sendConfirmationCode = async (to) => {
     // throw new Error(`Error sending email: ${error.message}`);
     console.log(error);
   }
-  if(response.ok){console.log("Email sent successfully")}
+  if(response.ok){console.log("Email sent successfully"),console.log(SENDGRID_SENDER_EMAIL),console.log(SENDGRID_API_KEY)}
 
   return confirmationCode;
 };

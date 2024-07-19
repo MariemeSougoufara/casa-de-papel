@@ -2,7 +2,7 @@ import React from 'react';
 import { View, Text, TextInput, StyleSheet, ScrollView, Image } from 'react-native';
 
 const AccountScreen = () => {
-  const profileImage = require('../assets/profile.jpg'); // Image de profil statique
+  const profileImage = require('../assets/Profile.jpg'); // Image de profil statique
 
   return (
     <ScrollView contentContainerStyle={styles.container}>

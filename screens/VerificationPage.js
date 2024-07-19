@@ -29,10 +29,6 @@ const VerificationPage = () => {
   };
 
   const handleContinue = () => {
-    // Logique pour continuer avec les documents téléchargés
-    console.log('ID Copy:', idCopy);
-    console.log('Selfie:', selfie);
-    console.log('Proof of Address:', proofOfAddress);
     // Naviguer directement vers la page de succès de la vérification d'identité
     navigation.navigate('IdentityVerificationSuccess');
   };

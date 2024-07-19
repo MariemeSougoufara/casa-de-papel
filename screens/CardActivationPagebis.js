@@ -8,7 +8,6 @@ const CardActivationPagebis = () => {
   const navigation = useNavigation();
 
   const handleStart = () => {
-    console.log('Processus d\'activation de la carte commencé');
     navigation.navigate('CardNumberEntryPage'); // Utilisez le nom correct de l'écran
   };
 
@@ -24,7 +23,7 @@ const CardActivationPagebis = () => {
 
       <View style={styles.content}>
         <Image
-          source={require('../assets/activationcarte1.jpg')}
+          source={require('../assets/CarteActivee.png')}
           style={styles.cardImage}
         />
         <View style={styles.redBanner}>

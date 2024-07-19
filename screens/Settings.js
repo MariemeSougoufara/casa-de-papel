@@ -24,7 +24,7 @@ const SettingsScreen = ({ navigation }) => {
         <TouchableOpacity style={styles.option} onPress={() => navigation.navigate('Profile')}>
           <View style={tw`flex-row items-center`}>
             <MaterialCommunityIcons name="account" size={24} color="black" />
-            <Text style={tw`ml-3 text-black`}>Profile</Text>
+            <Text style={tw`ml-3 text-black`}>Profil</Text>
           </View>
         </TouchableOpacity>
 
@@ -47,7 +47,7 @@ const SettingsScreen = ({ navigation }) => {
           <View style={tw`flex-row items-center justify-between`}>
             <View style={tw`flex-row items-center`}>
               <MaterialCommunityIcons name="theme-light-dark" size={24} color="black" />
-              <Text style={tw`ml-3 text-black`}>Dark Theme</Text>
+              <Text style={tw`ml-3 text-black`}>Mode Sombre</Text>
             </View>
             <Switch
               trackColor={{ false: "#767577", true: "#81b0ff" }}
@@ -61,21 +61,21 @@ const SettingsScreen = ({ navigation }) => {
         <TouchableOpacity style={styles.option} onPress={() => navigation.navigate('LanguageSettings')}>
           <View style={tw`flex-row items-center`}>
             <MaterialCommunityIcons name="earth" size={24} color="black" />
-            <Text style={tw`ml-3 text-black`}>Language</Text>
+            <Text style={tw`ml-3 text-black`}>Langage</Text>
           </View>
         </TouchableOpacity>
 
         <TouchableOpacity style={styles.option} onPress={() => navigation.navigate('AppInfo')}>
           <View style={tw`flex-row items-center`}>
             <MaterialCommunityIcons name="information" size={24} color="black" />
-            <Text style={tw`ml-3 text-black`}>About App</Text>
+            <Text style={tw`ml-3 text-black`}>A Propos de l'application</Text>
           </View>
         </TouchableOpacity>
 
         <TouchableOpacity style={styles.option} onPress={() => {navigation.navigate("SignIn") }}>
           <View style={tw`flex-row items-center`}>
             <MaterialCommunityIcons name="logout" size={24} color="black" />
-            <Text style={tw`ml-3 text-black`}>Logout</Text>
+            <Text style={tw`ml-3 text-black`}>Se Déconnecter</Text>
           </View>
         </TouchableOpacity>
       </View>

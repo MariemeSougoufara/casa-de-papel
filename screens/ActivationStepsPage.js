@@ -19,11 +19,11 @@ const ActivationStepsPage = () => {
           style={styles.logo}
         />
         {/* Texte "Demande du code secret" */}
-        <Text style={styles.bannerText}>Demande du code secret</Text>
+        <Text style={styles.bannerText}>Casa De Papel</Text>
       </View>
 
       <Image
-        source={require('../assets/activationcarte1.jpg')}
+        source={require('../assets/CarteActivee.png')}
         style={styles.image}
       />
       <Text style={styles.title}>Pour recevoir votre code secret</Text>
@@ -66,18 +66,18 @@ const styles = StyleSheet.create({
   bannerText: {
     color: 'white',
     fontWeight: 'bold',
-    fontSize: 16,
+    fontSize: 20,
   },
   image: {
-    width: 350,
-    height: 300,
+    width: 220,
+    height: 200,
     marginTop: 120, // Augmenter l'espace entre la bannière et le contenu
     marginBottom: 30,
   },
   title: {
     fontSize: 18,
     fontWeight: 'bold',
-    color: '#007BFF',
+    color: 'red',
     marginBottom: 20,
     textAlign: 'center',
   },
@@ -88,7 +88,7 @@ const styles = StyleSheet.create({
     textAlign: 'center',
   },
   button: {
-    backgroundColor: '#007BFF',
+    backgroundColor: 'red',
     paddingVertical: 10,
     paddingHorizontal: 20,
     borderRadius: 5,

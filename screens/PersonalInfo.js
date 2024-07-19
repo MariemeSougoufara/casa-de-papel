@@ -32,7 +32,7 @@ const PersonalInfo = ({ navigation, route }) => {
 
         try {
             await registerUser(userDetails);
-            navigation.navigate("SignIn");
+            navigation.navigate("VerificationPage");
         } catch (error) {
             console.error('Registration failed:', error.message);
         } finally {
